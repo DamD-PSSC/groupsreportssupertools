@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './App.module.scss';
-import LoginPage from './components/pages/LoginPage/LoginPage';
+import NavbarButton from './components/atoms/NavbarButton/NavbarButton';
 
 function App() {
     return (
         <div>
-            <LoginPage />
+            <NavbarButton buttonText="Find a group" />
+            <NavbarButton buttonText="Groups reports" active />
         </div>
     );
 }
