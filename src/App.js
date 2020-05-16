@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './App.module.scss';
-import NavbarButton from './components/atoms/NavbarButton/NavbarButton';
+import InputField from './components/atoms/InputField/InputField';
 
-function App() {
+const App = () => {
     return (
         <div>
-            <NavbarButton buttonText="Find a group" />
-            <NavbarButton buttonText="Groups reports" active />
+            <InputField placeholder="What group are you looking for..." />
         </div>
     );
-}
+};
 
 export default App;
