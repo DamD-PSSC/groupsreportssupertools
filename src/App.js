@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './App.module.scss';
-import IconButton from './components/atoms/IconButton/IconButton';
+import FindGroupHeader from './components/molecules/FindGroupHeader/FindGroupHeader';
 
 const App = () => {
     return (
         <div>
-            <IconButton iconText="Find" iconType="faTools" />
-            <IconButton iconText="Export" iconType="faSave" />
-            <IconButton iconText="Back" iconType="faArrowLeft" />
+            <FindGroupHeader />
         </div>
     );
 };
