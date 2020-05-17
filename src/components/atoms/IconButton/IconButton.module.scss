@@ -1,0 +1,24 @@
+.iconButtonIcon {
+    color: #4695e8 !important;
+    font-size: 1.8rem;
+
+    &Wrapper {
+        width: 40px !important;
+        height: 32px !important;
+    }
+}
+
+.iconButtonText {
+    padding-right: 20px;
+    line-height: 85%;
+    padding-bottom: 5px;
+    font-size: 1.7rem;
+}
+
+.iconButton {
+    background-color: #f7a31d !important;
+    border-radius: 20px !important;
+    border: none !important;
+    width: 165px !important;
+    height: 50px !important;
+}

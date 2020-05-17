@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './App.module.scss';
-import InputField from './components/atoms/InputField/InputField';
+import IconButton from './components/atoms/IconButton/IconButton';
 
 const App = () => {
     return (
         <div>
-            <InputField placeholder="What group are you looking for..." />
+            <IconButton iconText="Find" iconType="faTools" />
+            <IconButton iconText="Export" iconType="faSave" />
+            <IconButton iconText="Back" iconType="faArrowLeft" />
         </div>
     );
 };
