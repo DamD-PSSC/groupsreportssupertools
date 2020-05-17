@@ -1,0 +1,11 @@
+.findGroupHeaderTitle {
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.findGroupHeaderWrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: 30vh !important;
+}
