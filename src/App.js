@@ -1,12 +1,18 @@
 import React from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import cx from 'classnames';
 import styles from './App.module.scss';
-import FindGroupHeader from './components/molecules/FindGroupHeader/FindGroupHeader';
+import FindGroupPage from './components/pages/FindGroupPage/FindGroupPage';
+import LoginPage from './components/pages/LoginPage/LoginPage';
 
 const App = () => {
     return (
-        <div>
-            <FindGroupHeader />
-        </div>
+        <BrowserRouter>
+            <div className={cx(styles.applicationWrapper)}>
+                <Route exact path="/" component={LoginPage} />
+                <Route exact path="/findgroup" component={FindGroupPage} />
+            </div>
+        </BrowserRouter>
     );
 };
 
