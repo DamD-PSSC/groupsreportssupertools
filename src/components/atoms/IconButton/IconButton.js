@@ -11,7 +11,7 @@ import {
 const IconButton = ({ iconText, iconType }) => {
     const iconList = { faTools, faSave, faArrowLeft };
     return (
-        <div>
+        <>
             <button
                 className={cx(styles.iconButton, 'button', 'has-text-white')}
             >
@@ -23,7 +23,7 @@ const IconButton = ({ iconText, iconType }) => {
                     />
                 </span>
             </button>
-        </div>
+        </>
     );
 };
 
