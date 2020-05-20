@@ -10,7 +10,12 @@ const FindGroupDetailsHeader = () => (
         </div>
 
         <div
-            className={cx(styles.headerWrapper, 'column', 'has-text-centered')}
+            className={cx(
+                styles.headerWrapper,
+                'column',
+                'has-text-centered',
+                'is-full'
+            )}
         >
             <h2 className="has-text-white is-size-2 has-text-weight-bold">
                 "Display Name"
