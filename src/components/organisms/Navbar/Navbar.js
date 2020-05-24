@@ -6,6 +6,7 @@ import NavbarButton from '../../atoms/NavbarButton/NavbarButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '../../../contexts/AuthContext';
+import LogoutButton from '../../atoms/LogoutButton/LogoutButton';
 
 const Navbar = () => {
     const {
@@ -45,6 +46,7 @@ const Navbar = () => {
                             >
                                 {user.displayName}
                             </p>
+                            <LogoutButton />
                         </div>
                     ) : null}
                 </div>

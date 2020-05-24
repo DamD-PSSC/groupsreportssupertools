@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import styles from './InputField.module.scss';
 
-const InputField = ({ placeholder }) => {
-    const [inputValue, setInputValue] = useState('');
-
+const InputField = ({ field, form, ...props }) => {
     return (
         <input
-            className={
-                inputValue.length
-                    ? cx(styles.inputField, 'input', 'is-primary')
-                    : cx(styles.inputField, 'input')
-            }
+            className={cx(styles.inputField, 'input')}
             type="text"
-            placeholder={placeholder}
-            onChange={(event) => {
-                setInputValue(event.target.value);
-            }}
+            {...field}
+            {...props}
         />
     );
 };

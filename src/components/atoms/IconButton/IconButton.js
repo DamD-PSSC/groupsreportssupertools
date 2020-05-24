@@ -8,12 +8,15 @@ import {
     faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
-const IconButton = ({ iconText, iconType }) => {
+const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
     const iconList = { faTools, faSave, faArrowLeft };
     return (
         <>
             <button
-                className={cx(styles.iconButton, 'button', 'has-text-white')}
+                className={cx(styles.iconButton, 'button', 'has-text-white', {
+                    'is-loading': isLoading,
+                })}
+                {...props}
             >
                 <span className={cx(styles.iconButtonText)}>{iconText}</span>
                 <span className={cx(styles.iconButtonIconWrapper, 'icon')}>
