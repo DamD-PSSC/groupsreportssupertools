@@ -4,10 +4,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bulma';
 import styles from './index.module.scss';
+import AuthContextProvider from './contexts/AuthContext';
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
