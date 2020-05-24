@@ -3,9 +3,12 @@ import styles from './LoginButton.module.scss';
 import cx from 'classnames';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { login } from '../../../MSAuth';
+import { useHistory } from 'react-router-dom';
 
 const LoginButton = () => {
     const { auth, dispatch } = useContext(AuthContext);
+
+    const history = useHistory();
 
     return (
         <div>
@@ -20,6 +23,7 @@ const LoginButton = () => {
                     try {
                         const user = await login();
                         dispatch({ type: 'USER_LOGIN', user });
+                        history.push('/findgroup');
                     } catch (error) {
                         dispatch({ type: 'SET_AUTH_ERROR', error });
                     }

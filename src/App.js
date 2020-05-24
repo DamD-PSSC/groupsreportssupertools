@@ -10,22 +10,27 @@ import Footer from './components/organisms/Footer/Footer';
 import { getUserProfile } from './MSAuth';
 import { AuthContext } from './contexts/AuthContext';
 
+// TODO: Add delay to render LoginPage.
+
 const App = () => {
     const {
         auth: { errorMessage },
         dispatch,
     } = useContext(AuthContext);
 
-    // TODO: Try to access data stored in local token.
-    // useEffect(() => {
-    //     async function fetchDataProfile() {
-    //         const user = await getUserProfile();
-    //         if (!user.message) {
-    //             dispatch({ type: 'USER_LOGIN', user });
-    //         }
-    //     }
-    //     fetchDataProfile();
-    // }, []);
+    useEffect(() => {
+        async function fetchDataProfile() {
+            try {
+                const user = await getUserProfile();
+                if (user) {
+                    dispatch({ type: 'USER_LOGIN', user });
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchDataProfile();
+    }, []);
 
     return (
         <BrowserRouter>

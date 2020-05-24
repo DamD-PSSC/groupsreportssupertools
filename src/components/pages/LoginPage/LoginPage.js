@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import cx from 'classnames';
 import styles from './LoginPage.module.scss';
-import Logo from '../../atoms/Logo/Logo';
 import LoginHeader from '../../molecules/LoginHeader/LoginHeader';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthContext';
 
-const LoginPage = () => (
-    <>
-        <section className="section">
-            <div className={cx(styles.loginPageWrapper)}>
-                <div className={cx(styles.loginPageContent, 'container')}>
-                    <LoginHeader />
+const LoginPage = () => {
+    const {
+        auth: { isAuthenticated },
+    } = useContext(AuthContext);
+    const history = useHistory();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/findgroup');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
+    return (
+        <>
+            <section className="section">
+                <div className={cx(styles.loginPageWrapper)}>
+                    <div className={cx(styles.loginPageContent, 'container')}>
+                        <LoginHeader />
+                    </div>
                 </div>
-            </div>
-        </section>
-    </>
-);
+            </section>
+        </>
+    );
+};
 
 export default LoginPage;

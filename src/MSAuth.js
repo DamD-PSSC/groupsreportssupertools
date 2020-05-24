@@ -24,22 +24,8 @@ export const getToken = async () => {
         if (accessToken) {
             return accessToken;
         }
-    } catch (err) {
-        let error = {};
-        if (typeof err === 'string') {
-            var errParts = err.split('|');
-            error =
-                errParts.length > 1
-                    ? { message: errParts[1], debug: errParts[0] }
-                    : { message: err };
-        } else {
-            error = {
-                message: err.message,
-                debug: JSON.stringify(err),
-            };
-        }
-
-        return error;
+    } catch (error) {
+        throw new Error(error.message);
     }
 };
 
@@ -54,22 +40,8 @@ export const getUserProfile = async () => {
             var user = await getUserDetails(accessToken);
             return user;
         }
-    } catch (err) {
-        var error = {};
-        if (typeof err === 'string') {
-            var errParts = err.split('|');
-            error =
-                errParts.length > 1
-                    ? { message: errParts[1], debug: errParts[0] }
-                    : { message: err };
-        } else {
-            error = {
-                message: err.message,
-                debug: JSON.stringify(err),
-            };
-        }
-
-        return error;
+    } catch (error) {
+        throw new Error(error.message);
     }
 };
 
