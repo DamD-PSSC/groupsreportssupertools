@@ -4,6 +4,7 @@ import styles from './FindGroupPage.module.scss';
 import FindGroupHeader from '../../molecules/FindGroupHeader/FindGroupHeader';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
+import ErrorNotification from '../../atoms/ErrorNotification/ErrorNotification';
 
 const FindGroupPage = () => {
     const {
@@ -24,6 +25,7 @@ const FindGroupPage = () => {
                 <div>
                     <FindGroupHeader />
                 </div>
+                <ErrorNotification />
             </div>
         </>
     );

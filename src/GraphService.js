@@ -28,3 +28,17 @@ export async function getUserDetails() {
         console.log('GetUDetails: ' + error);
     }
 }
+
+export async function getGroupDetails(groupName) {
+    try {
+        const client = await getAuthenticatedClient();
+
+        const groupDetails = await client
+            .api(`/groups?$filter=mail eq '${groupName}'`)
+            .get();
+
+        return groupDetails;
+    } catch (error) {
+        return error;
+    }
+}

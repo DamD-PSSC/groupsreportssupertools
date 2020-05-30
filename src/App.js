@@ -9,6 +9,7 @@ import Navbar from './components/organisms/Navbar/Navbar';
 import Footer from './components/organisms/Footer/Footer';
 import { getUserProfile } from './MSAuth';
 import { AuthContext } from './contexts/AuthContext';
+import GroupsContextProvider from './contexts/GroupsContext';
 
 // TODO: Add delay to render LoginPage.
 
@@ -38,7 +39,11 @@ const App = () => {
                 <Navbar />
                 <Switch>
                     <Route exact path="/" component={LoginPage} />
-                    <Route exact path="/findgroup" component={FindGroupPage} />
+                    <Route exact path="/findgroup">
+                        <GroupsContextProvider>
+                            <FindGroupPage />
+                        </GroupsContextProvider>
+                    </Route>
                     <Route
                         exact
                         path="/findgroupdetails"

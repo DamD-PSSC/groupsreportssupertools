@@ -3,12 +3,12 @@ export const GroupsReducer = (state, action) => {
         case 'SET_GROUP_ERROR':
             return {
                 ...state,
-                error: action.group.message,
+                error: action.groupData.message,
             };
         case 'SET_GROUP_DETAILS':
             return {
                 ...state,
-                group: action.group.value[0],
+                group: action.groupData.value[0],
                 error: '',
             };
         case 'SET_GROUP_OWNERS':
@@ -35,17 +35,17 @@ export const GroupsReducer = (state, action) => {
                 groupsFilteredByString: action.groupsFilteredFetch,
                 error: '',
             };
-        case 'CREATE_GROUP':
-            return {
-                ...state,
-                newGroupDate: action.group,
-                error: '',
-            };
         case 'CLEAR_FILTERED_DATA':
             return {
                 ...state,
                 groupsFilteredByString: [],
                 groupsFiltered: [],
+                error: '',
+            };
+        case 'CLEAR_GROUP_DATA':
+            return {
+                ...state,
+                group: null,
                 error: '',
             };
         default:

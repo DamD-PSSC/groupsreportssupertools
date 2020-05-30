@@ -10,7 +10,6 @@ const initialState = {
     groupsFiltered: [],
     groupsFilteredByString: [],
     error: '',
-    newGroupDate: null,
 };
 
 const GroupsContextProvider = (props) => {
