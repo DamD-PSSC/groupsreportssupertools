@@ -5,6 +5,7 @@ import styles from './ListHalfColumn.module.scss';
 const ListHalfColumn = ({ ListName, ListValue }) => (
     <div
         className={cx(
+            styles.listHalfColumnWrapper,
             'column',
             'is-half',
             'has-text-white',
@@ -12,10 +13,14 @@ const ListHalfColumn = ({ ListName, ListValue }) => (
             'is-size-3'
         )}
     >
-        <p>{ListName}</p>
-        {ListValue.map((item) => (
-            <p>{item}</p>
-        ))}
+        <p className={cx(styles.listName)}>{ListName}:</p>
+        <div className={cx(styles.listDataWrapper)}>
+            {ListValue.map((item, index) => (
+                <p key={index}>
+                    {item.displayName}, {item.userPrincipalName}
+                </p>
+            ))}
+        </div>
     </div>
 );
 

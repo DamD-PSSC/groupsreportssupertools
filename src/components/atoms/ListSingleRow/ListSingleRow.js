@@ -3,7 +3,14 @@ import cx from 'classnames';
 import styles from './ListSingleRow.module.scss';
 
 const ListSingleRow = ({ ListName, ListValue }) => (
-    <div className="columns is-vcentered">
+    <div
+        className={cx(
+            styles.listSingleRowWrapper,
+            'columns',
+            'is-vcentered',
+            'is-marginless'
+        )}
+    >
         <div
             className={cx(
                 'column',
@@ -14,10 +21,11 @@ const ListSingleRow = ({ ListName, ListValue }) => (
                 'is-paddingless'
             )}
         >
-            <p>{ListName}</p>
+            <p>{ListName}:</p>
         </div>
         <div
             className={cx(
+                styles.listDataWrapper,
                 'column',
                 'has-text-centered',
                 'is-half',
@@ -26,8 +34,10 @@ const ListSingleRow = ({ ListName, ListValue }) => (
                 'is-paddingless'
             )}
         >
-            {ListValue.map((item) => (
-                <p>{item}</p>
+            {ListValue.map((item, index) => (
+                <p key={index}>
+                    {item.includes('SMTP:') ? <b>{item}</b> : item}
+                </p>
             ))}
         </div>
     </div>

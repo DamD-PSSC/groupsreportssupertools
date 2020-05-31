@@ -42,3 +42,27 @@ export async function getGroupDetails(groupName) {
         return error;
     }
 }
+
+export async function getGroupOwners(groupId) {
+    try {
+        const client = await getAuthenticatedClient();
+
+        const owners = await client.api(`groups/${groupId}/owners`).get();
+
+        return owners;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getGroupMembers(groupId) {
+    try {
+        const client = await getAuthenticatedClient();
+
+        const members = await client.api(`groups/${groupId}/members`).get();
+
+        return members;
+    } catch (error) {
+        return error;
+    }
+}

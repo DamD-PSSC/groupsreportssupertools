@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './FindGroupDetailsPage.module.scss';
 import FindGroupDetailsHeader from '../../molecules/FindGroupDetailsHeader/FindGroupDetailsHeader';
@@ -6,47 +7,103 @@ import TextSingleRow from '../../atoms/TextSingleRow/TextSingleRow';
 import ListSingleRow from '../../atoms/ListSingleRow/ListSingleRow';
 import ListHalfColumn from '../../atoms/ListHalfColumn/ListHalfColumn';
 import IconButton from '../../atoms/IconButton/IconButton';
+import { GroupsContext } from '../../../contexts/GroupsContext';
+import moment from 'moment';
+import { getGroupMembers, getGroupOwners } from '../../../GraphService';
 
-const FindGroupDetailsPage = () => (
-    <>
-        <div
-            className={cx(
-                styles.contentWrapper,
-                'columns',
-                'is-vcentered',
-                'is-relative'
-            )}
-        >
-            <FindGroupDetailsHeader />
-        </div>
+const FindGroupDetailsPage = () => {
+    const {
+        groups: { group, groupMembers, groupOwners },
+        dispatch,
+    } = useContext(GroupsContext);
 
-        <TextSingleRow DataName="Created time" DataValue="<CreatedTime>" />
-        <TextSingleRow DataName="Description" DataValue="<Description20>" />
-        <TextSingleRow DataName="Mail Address" DataValue="<MailAddress>" />
-        <TextSingleRow DataName="Mail Nickname" DataValue="<MailNickname>" />
-        <ListSingleRow
-            ListName="Provision Options"
-            ListValue={['<List1>', '<List2>']}
-        />
-        <ListSingleRow
-            ListName="Mail Aliases"
-            ListValue={['<List1>', '<List2>']}
-        />
-        <div className={cx('columns', 'is-vcentered')}>
-            <ListHalfColumn
-                ListName="Owners"
-                ListValue={['<List1>', '<List2>']}
-            />
-            <ListHalfColumn
-                ListName="Members"
-                ListValue={['<List1>', '<List2>']}
-            />
-        </div>
-        <TextSingleRow DataName="Visibility" DataValue="<Visibility>" />
-        <div className={cx('column', 'has-text-centered')}>
-            <IconButton iconType="faSave" iconText="Export" />
-        </div>
-    </>
-);
+    const history = useHistory();
+
+    useEffect(() => {
+        if (!group) {
+            history.push('/findgroup');
+        }
+    }, []);
+
+    useEffect(() => {
+        async function fetchGroupData() {
+            if (group) {
+                const groupOwners = await getGroupOwners(group.id);
+                dispatch({ type: 'SET_GROUP_OWNERS', groupOwners });
+                const groupMembers = await getGroupMembers(group.id);
+                dispatch({ type: 'SET_GROUP_MEMBERS', groupMembers });
+            }
+        }
+        fetchGroupData();
+    }, [group]);
+    return (
+        <>
+            {group ? (
+                <>
+                    <div
+                        className={cx(
+                            styles.contentWrapper,
+                            'columns',
+                            'is-vcentered',
+                            'is-relative'
+                        )}
+                    >
+                        <FindGroupDetailsHeader />
+                    </div>
+
+                    <TextSingleRow
+                        DataName="Created time"
+                        DataValue={moment(group.createdDateTime)
+                            .format('DD-MM-YYYY')
+                            .toString()}
+                    />
+                    <TextSingleRow
+                        DataName="Description"
+                        DataValue={
+                            group.description.length > 20
+                                ? group.description.substr(0, 20) + '...'
+                                : group.description
+                        }
+                    />
+                    <TextSingleRow
+                        DataName="Mail Address"
+                        DataValue={group.mail}
+                    />
+                    <TextSingleRow
+                        DataName="Mail Nickname"
+                        DataValue={group.mailNickname}
+                    />
+                    <ListSingleRow
+                        ListName="Provision Options"
+                        ListValue={group.resourceProvisioningOptions}
+                    />
+                    <ListSingleRow
+                        ListName="Mail Aliases"
+                        ListValue={group.proxyAddresses.filter((item) =>
+                            item.toLowerCase().includes('smtp')
+                        )}
+                    />
+                    <div className={cx('columns', 'is-vcentered')}>
+                        <ListHalfColumn
+                            ListName="Owners"
+                            ListValue={groupOwners}
+                        />
+                        <ListHalfColumn
+                            ListName="Members"
+                            ListValue={groupMembers}
+                        />
+                    </div>
+                    <TextSingleRow
+                        DataName="Visibility"
+                        DataValue={group.visibility}
+                    />
+                    <div className={cx('column', 'has-text-centered')}>
+                        <IconButton iconType="faSave" iconText="Export" />
+                    </div>
+                </>
+            ) : null}
+        </>
+    );
+};
 
 export default FindGroupDetailsPage;

@@ -3,7 +3,7 @@ import cx from 'classnames';
 import styles from './TextSingleRow.module.scss';
 
 const TextSingleRow = ({ DataName, DataValue }) => (
-    <div className={cx('columns', 'is-vcentered')}>
+    <div className={cx(styles.textSingleRowWrapper, 'columns', 'is-vcentered')}>
         <div
             className={cx(
                 'column',

@@ -41,27 +41,35 @@ const FindGroupHeader = () => {
                 initialValues={{ groupName: '' }}
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
-                    const groupData = await getGroupDetails(values.groupName);
+                    const groupData = await getGroupDetails(
+                        values.groupName.trim().toLowerCase()
+                    );
                     if (!groupData.statusCode && groupData.value.length) {
                         dispatch({
                             type: 'SET_GROUP_DETAILS',
                             groupData,
                         });
+                        setSubmitting(false);
+                        resetForm();
                         history.push('/findgroupdetails');
                     } else if (groupData.statusCode) {
                         dispatch({
                             type: 'SET_GROUP_ERROR',
                             groupData,
                         });
+                        setSubmitting(false);
+                        resetForm();
                     } else {
-                        groupData.message = `Brak poszukiwanej grupy "${values.groupName}"`;
+                        groupData.message = `Brak poszukiwanej grupy "${values.groupName
+                            .trim()
+                            .toLowerCase()}"`;
                         dispatch({
                             type: 'SET_GROUP_ERROR',
                             groupData,
                         });
+                        setSubmitting(false);
+                        resetForm();
                     }
-                    setSubmitting(false);
-                    resetForm();
                 }}
             >
                 {({ isSubmitting }) => (

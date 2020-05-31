@@ -1,0 +1,11 @@
+.listDataWrapper {
+    max-height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // border-bottom: solid 1px #fff;
+    // border-radius: 5px;
+}
+
+.listSingleRowWrapper {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}

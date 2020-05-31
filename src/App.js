@@ -12,6 +12,7 @@ import { AuthContext } from './contexts/AuthContext';
 import GroupsContextProvider from './contexts/GroupsContext';
 
 // TODO: Add delay to render LoginPage.
+// TODO: Add global mixins.
 
 const App = () => {
     const {
@@ -44,11 +45,11 @@ const App = () => {
                             <FindGroupPage />
                         </GroupsContextProvider>
                     </Route>
-                    <Route
-                        exact
-                        path="/findgroupdetails"
-                        component={FindGroupDetailsPage}
-                    />
+                    <Route exact path="/findgroupdetails">
+                        <GroupsContextProvider>
+                            <FindGroupDetailsPage />
+                        </GroupsContextProvider>
+                    </Route>
                 </Switch>
                 <Footer />
             </div>
