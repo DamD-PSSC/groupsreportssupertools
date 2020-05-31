@@ -5,6 +5,7 @@ import styles from './App.module.scss';
 import FindGroupPage from './components/pages/FindGroupPage/FindGroupPage';
 import LoginPage from './components/pages/LoginPage/LoginPage';
 import FindGroupDetailsPage from './components/pages/FindGroupDetailsPage/FindGroupsDetailsPage';
+import GroupsReportsPage from './components/pages/GroupsReportsPage/GroupsReportsPage';
 import Navbar from './components/organisms/Navbar/Navbar';
 import Footer from './components/organisms/Footer/Footer';
 import { getUserProfile } from './MSAuth';
@@ -48,6 +49,11 @@ const App = () => {
                     <Route exact path="/findgroupdetails">
                         <GroupsContextProvider>
                             <FindGroupDetailsPage />
+                        </GroupsContextProvider>
+                    </Route>
+                    <Route exact path="/groupsreports">
+                        <GroupsContextProvider>
+                            <GroupsReportsPage />
                         </GroupsContextProvider>
                     </Route>
                 </Switch>

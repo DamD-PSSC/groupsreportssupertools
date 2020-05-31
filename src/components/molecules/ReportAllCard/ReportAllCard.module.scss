@@ -1,0 +1,22 @@
+.reportAllCardWrapper {
+    width: 800px;
+    border-radius: 20px !important;
+    margin-bottom: 20px;
+}
+
+.columnWrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+}
+
+.cardHeaderWrapper {
+    background-color: #2a85e6 !important;
+    border-radius: 20px 20px 0 0;
+}
+
+.cardFooterWrapper {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}

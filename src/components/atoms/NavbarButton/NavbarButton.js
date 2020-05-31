@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './NavbarButton.module.scss';
 
-const NavbarButton = ({ buttonText, active }) => (
+const NavbarButton = ({ buttonText, active, ...props }) => (
     <button
         className={
             active
@@ -14,6 +14,7 @@ const NavbarButton = ({ buttonText, active }) => (
                       'is-outlined'
                   )
         }
+        {...props}
     >
         {buttonText}
     </button>
