@@ -35,6 +35,12 @@ export const GroupsReducer = (state, action) => {
                 groupsFilteredByString: action.groupsFilteredFetch,
                 error: '',
             };
+        case 'SET_SINGLE_GROUP_EXPORT_DATA':
+            return {
+                ...state,
+                singleGroupExportData: action.groupExportData,
+                error: '',
+            };
         case 'CLEAR_FILTERED_DATA':
             return {
                 ...state,
@@ -47,6 +53,7 @@ export const GroupsReducer = (state, action) => {
                 ...state,
                 group: null,
                 error: '',
+                singleGroupExportData: [],
             };
         default:
             return state;

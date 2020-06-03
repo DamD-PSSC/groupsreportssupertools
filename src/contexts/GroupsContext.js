@@ -9,6 +9,7 @@ const initialState = {
     groupMembers: [],
     groupsFiltered: [],
     groupsFilteredByString: [],
+    singleGroupExportData: [],
     error: '',
 };
 

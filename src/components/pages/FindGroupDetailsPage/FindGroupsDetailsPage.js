@@ -10,10 +10,11 @@ import IconButton from '../../atoms/IconButton/IconButton';
 import { GroupsContext } from '../../../contexts/GroupsContext';
 import moment from 'moment';
 import { getGroupMembers, getGroupOwners } from '../../../GraphService';
+import { CSVLink } from 'react-csv';
 
 const FindGroupDetailsPage = () => {
     const {
-        groups: { group, groupMembers, groupOwners },
+        groups: { group, groupMembers, groupOwners, singleGroupExportData },
         dispatch,
     } = useContext(GroupsContext);
 
@@ -32,10 +33,28 @@ const FindGroupDetailsPage = () => {
                 dispatch({ type: 'SET_GROUP_OWNERS', groupOwners });
                 const groupMembers = await getGroupMembers(group.id);
                 dispatch({ type: 'SET_GROUP_MEMBERS', groupMembers });
+                const groupExportData = [
+                    {
+                        ...group,
+
+                        owners: groupOwners.value.map(
+                            (item) => item.userPrincipalName
+                        ),
+
+                        members: groupMembers.value.map(
+                            (item) => item.userPrincipalName
+                        ),
+                    },
+                ];
+                dispatch({
+                    type: 'SET_SINGLE_GROUP_EXPORT_DATA',
+                    groupExportData,
+                });
             }
         }
         fetchGroupData();
     }, [group]);
+
     return (
         <>
             {group ? (
@@ -95,7 +114,14 @@ const FindGroupDetailsPage = () => {
                         </div>
                     </div>
                     <div className={cx('column', 'has-text-centered')}>
-                        <IconButton iconType="faSave" iconText="Export" />
+                        {singleGroupExportData.length ? (
+                            <CSVLink data={singleGroupExportData}>
+                                <IconButton
+                                    iconType="faSave"
+                                    iconText="Export"
+                                />
+                            </CSVLink>
+                        ) : null}
                     </div>
                 </div>
             ) : null}
