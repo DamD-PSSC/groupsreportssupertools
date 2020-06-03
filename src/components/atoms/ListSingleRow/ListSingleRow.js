@@ -3,20 +3,12 @@ import cx from 'classnames';
 import styles from './ListSingleRow.module.scss';
 
 const ListSingleRow = ({ ListName, ListValue }) => (
-    <div
-        className={cx(
-            styles.listSingleRowWrapper,
-            'columns',
-            'is-vcentered',
-            'is-marginless'
-        )}
-    >
+    <div className={cx(styles.listSingleRowWrapper, 'columns', 'is-vcentered')}>
         <div
             className={cx(
                 'column',
                 'has-text-centered',
                 'is-half',
-                'has-text-white',
                 'is-size-3',
                 'is-paddingless'
             )}
@@ -29,7 +21,6 @@ const ListSingleRow = ({ ListName, ListValue }) => (
                 'column',
                 'has-text-centered',
                 'is-half',
-                'has-text-white',
                 'is-size-3',
                 'is-paddingless'
             )}

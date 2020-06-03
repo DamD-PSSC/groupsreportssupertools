@@ -60,7 +60,7 @@ const FindGroupHeader = () => {
                         setSubmitting(false);
                         resetForm();
                     } else {
-                        groupData.message = `Brak poszukiwanej grupy "${values.groupName
+                        groupData.message = `Failed to find group with name "${values.groupName
                             .trim()
                             .toLowerCase()}"`;
                         dispatch({

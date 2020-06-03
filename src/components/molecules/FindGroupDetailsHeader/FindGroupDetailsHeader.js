@@ -30,7 +30,8 @@ const FindGroupDetailsHeader = () => {
                     styles.headerWrapper,
                     'column',
                     'has-text-centered',
-                    'is-full'
+                    'is-full',
+                    'card-header'
                 )}
             >
                 <h2 className="has-text-white is-size-2 has-text-weight-bold">

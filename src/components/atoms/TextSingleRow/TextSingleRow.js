@@ -9,7 +9,6 @@ const TextSingleRow = ({ DataName, DataValue }) => (
                 'column',
                 'has-text-centered',
                 'is-half',
-                'has-text-white',
                 'is-size-3',
                 'is-paddingless'
             )}
@@ -21,7 +20,6 @@ const TextSingleRow = ({ DataName, DataValue }) => (
                 'column',
                 'has-text-centered',
                 'is-half',
-                'has-text-white',
                 'is-size-3',
                 'is-paddingless'
             )}

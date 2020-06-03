@@ -6,13 +6,8 @@ const NavbarButton = ({ buttonText, active, ...props }) => (
     <button
         className={
             active
-                ? cx(styles.navbarButtonActive, 'button', 'is-outlined')
-                : cx(
-                      styles.navbarButton,
-                      'button',
-                      'has-text-white',
-                      'is-outlined'
-                  )
+                ? cx(styles.navbarButtonActive, 'button')
+                : cx(styles.navbarButton, 'button', 'has-text-white')
         }
         {...props}
     >

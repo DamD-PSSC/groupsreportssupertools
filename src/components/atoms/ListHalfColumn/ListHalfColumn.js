@@ -8,7 +8,6 @@ const ListHalfColumn = ({ ListName, ListValue }) => (
             styles.listHalfColumnWrapper,
             'column',
             'is-half',
-            'has-text-white',
             'has-text-centered',
             'is-size-3'
         )}

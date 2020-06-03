@@ -39,68 +39,65 @@ const FindGroupDetailsPage = () => {
     return (
         <>
             {group ? (
-                <>
-                    <div
-                        className={cx(
-                            styles.contentWrapper,
-                            'columns',
-                            'is-vcentered',
-                            'is-relative'
-                        )}
-                    >
+                <div className={cx(styles.cardContentWrapper, 'card')}>
+                    <div className={cx(styles.contentWrapper, 'is-relative')}>
                         <FindGroupDetailsHeader />
                     </div>
-
-                    <TextSingleRow
-                        DataName="Created time"
-                        DataValue={moment(group.createdDateTime)
-                            .format('DD-MM-YYYY')
-                            .toString()}
-                    />
-                    <TextSingleRow
-                        DataName="Description"
-                        DataValue={
-                            group.description.length > 20
-                                ? group.description.substr(0, 20) + '...'
-                                : group.description
-                        }
-                    />
-                    <TextSingleRow
-                        DataName="Mail Address"
-                        DataValue={group.mail}
-                    />
-                    <TextSingleRow
-                        DataName="Mail Nickname"
-                        DataValue={group.mailNickname}
-                    />
-                    <ListSingleRow
-                        ListName="Provision Options"
-                        ListValue={group.resourceProvisioningOptions}
-                    />
-                    <ListSingleRow
-                        ListName="Mail Aliases"
-                        ListValue={group.proxyAddresses.filter((item) =>
-                            item.toLowerCase().includes('smtp')
-                        )}
-                    />
-                    <div className={cx('columns', 'is-vcentered')}>
-                        <ListHalfColumn
-                            ListName="Owners"
-                            ListValue={groupOwners}
-                        />
-                        <ListHalfColumn
-                            ListName="Members"
-                            ListValue={groupMembers}
-                        />
+                    <div className="card-content">
+                        <div className="content">
+                            <TextSingleRow
+                                DataName="Created time"
+                                DataValue={moment(group.createdDateTime)
+                                    .format('DD-MM-YYYY')
+                                    .toString()}
+                            />
+                            <TextSingleRow
+                                DataName="Description"
+                                DataValue={
+                                    group.description.length > 20
+                                        ? group.description.substr(0, 20) +
+                                          '...'
+                                        : group.description
+                                }
+                            />
+                            <TextSingleRow
+                                DataName="Mail Address"
+                                DataValue={group.mail}
+                            />
+                            <TextSingleRow
+                                DataName="Mail Nickname"
+                                DataValue={group.mailNickname}
+                            />
+                            <ListSingleRow
+                                ListName="Provision Options"
+                                ListValue={group.resourceProvisioningOptions}
+                            />
+                            <ListSingleRow
+                                ListName="Mail Aliases"
+                                ListValue={group.proxyAddresses.filter((item) =>
+                                    item.toLowerCase().includes('smtp')
+                                )}
+                            />
+                            <div className={cx('columns', 'is-vcentered')}>
+                                <ListHalfColumn
+                                    ListName="Owners"
+                                    ListValue={groupOwners}
+                                />
+                                <ListHalfColumn
+                                    ListName="Members"
+                                    ListValue={groupMembers}
+                                />
+                            </div>
+                            <TextSingleRow
+                                DataName="Visibility"
+                                DataValue={group.visibility}
+                            />
+                        </div>
                     </div>
-                    <TextSingleRow
-                        DataName="Visibility"
-                        DataValue={group.visibility}
-                    />
                     <div className={cx('column', 'has-text-centered')}>
                         <IconButton iconType="faSave" iconText="Export" />
                     </div>
-                </>
+                </div>
             ) : null}
         </>
     );
