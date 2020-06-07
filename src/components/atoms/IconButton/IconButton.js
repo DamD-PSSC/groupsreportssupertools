@@ -21,12 +21,14 @@ const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
                 {...props}
             >
                 <span className={cx(styles.iconButtonText)}>{iconText}</span>
-                <span className={cx(styles.iconButtonIconWrapper, 'icon')}>
-                    <FontAwesomeIcon
-                        icon={iconList[iconType]}
-                        className={cx(styles.iconButtonIcon)}
-                    />
-                </span>
+                {isLoading ? null : (
+                    <span className={cx(styles.iconButtonIconWrapper, 'icon')}>
+                        <FontAwesomeIcon
+                            icon={iconList[iconType]}
+                            className={cx(styles.iconButtonIcon)}
+                        />
+                    </span>
+                )}
             </button>
         </>
     );
