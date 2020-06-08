@@ -55,7 +55,7 @@ const FindGroupHeader = () => {
                     } else if (groupData.statusCode) {
                         dispatch({
                             type: 'SET_GROUP_ERROR',
-                            groupData,
+                            error: groupData,
                         });
                         setSubmitting(false);
                         resetForm();
@@ -65,7 +65,7 @@ const FindGroupHeader = () => {
                             .toLowerCase()}"`;
                         dispatch({
                             type: 'SET_GROUP_ERROR',
-                            groupData,
+                            error: groupData,
                         });
                         setSubmitting(false);
                         resetForm();

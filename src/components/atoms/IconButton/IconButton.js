@@ -8,10 +8,18 @@ import {
     faArrowLeft,
     faSearch,
     faFileDownload,
+    faSync,
 } from '@fortawesome/free-solid-svg-icons';
 
 const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
-    const iconList = { faTools, faSave, faArrowLeft, faSearch, faFileDownload };
+    const iconList = {
+        faTools,
+        faSave,
+        faArrowLeft,
+        faSearch,
+        faFileDownload,
+        faSync,
+    };
     return (
         <>
             <button

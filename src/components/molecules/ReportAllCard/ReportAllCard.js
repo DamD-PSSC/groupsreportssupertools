@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import cx from 'classnames';
 import styles from './ReportAllCard.module.scss';
 import IconButton from '../../atoms/IconButton/IconButton';
 import CheckboxField from '../../atoms/CheckboxField/CheckboxField';
+import { GroupsContext } from '../../../contexts/GroupsContext';
+import { getGroups } from '../../../GraphService';
 
 const ReportAllCard = () => {
     const { register, handleSubmit } = useForm();
     const [loadingProcess, setLoadingProcess] = useState(false);
+    const {
+        groups: { groupsFiltered },
+        dispatch,
+    } = useContext(GroupsContext);
 
-    const onSubmit = (data, e) => {
+    const onSubmit = async (data, e) => {
         e.target.reset();
         setLoadingProcess(true);
-        setTimeout(() => {
+        data.exportValues.push('id');
+        try {
+            let groupsFilteredFetch = await getGroups(data.exportValues);
+            dispatch({
+                type: 'SET_GROUPS_FILTERED',
+                groupsFilteredFetch,
+            });
             setLoadingProcess(false);
-        }, 2000);
-        console.log(data);
+        } catch (error) {
+            dispatch({
+                type: 'SET_GROUP_ERROR',
+                error,
+            });
+        }
     };
 
     return (
@@ -97,7 +113,7 @@ const ReportAllCard = () => {
                 <div className={cx(styles.cardFooterWrapper, 'card-footer')}>
                     <IconButton
                         iconText="Fetch"
-                        iconType="faFileDownload"
+                        iconType="faSync"
                         type="submit"
                         isLoading={loadingProcess}
                     />

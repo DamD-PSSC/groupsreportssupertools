@@ -39,7 +39,7 @@ export async function getGroupDetails(groupName) {
 
         return groupDetails;
     } catch (error) {
-        return error;
+        throw error;
     }
 }
 
@@ -51,7 +51,7 @@ export async function getGroupOwners(groupId) {
 
         return owners;
     } catch (error) {
-        return error;
+        throw error;
     }
 }
 
@@ -63,6 +63,39 @@ export async function getGroupMembers(groupId) {
 
         return members;
     } catch (error) {
-        return error;
+        throw error;
+    }
+}
+
+export async function getGroups(filterOptions) {
+    try {
+        const client = await getAuthenticatedClient();
+        const filterOptionWithoutMembers = filterOptions
+            .filter((item) => item !== 'members')
+            .toString();
+        let groups = await client
+            .api('/groups')
+            .select(filterOptionWithoutMembers)
+            .get();
+
+        if (filterOptions.includes('members')) {
+            // Promise.all to resolve all promises from array
+            groups = await Promise.all(
+                groups.value.map(async (group) => {
+                    const members = await getGroupMembers(group.id);
+                    const owners = await getGroupOwners(group.id);
+                    return {
+                        ...group,
+                        members: members.value.map((member) => member.mail),
+                        owners: owners.value.map((owner) => owner.mail),
+                    };
+                })
+            );
+            return groups;
+        }
+
+        return groups.value;
+    } catch (error) {
+        throw error;
     }
 }

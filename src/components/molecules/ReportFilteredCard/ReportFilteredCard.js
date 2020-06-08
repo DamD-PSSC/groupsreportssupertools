@@ -39,7 +39,7 @@ const ReportFilteredCard = () => {
                 <div className={cx(styles.cardFooterWrapper, 'card-footer')}>
                     <IconButton
                         iconText="Fetch"
-                        iconType="faFileDownload"
+                        iconType="faSync"
                         type="submit"
                         isLoading={loadingProcess}
                     />

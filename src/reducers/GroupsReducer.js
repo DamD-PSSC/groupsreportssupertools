@@ -3,7 +3,7 @@ export const GroupsReducer = (state, action) => {
         case 'SET_GROUP_ERROR':
             return {
                 ...state,
-                error: action.groupData.message,
+                error: action.error.message,
             };
         case 'SET_GROUP_DETAILS':
             return {
