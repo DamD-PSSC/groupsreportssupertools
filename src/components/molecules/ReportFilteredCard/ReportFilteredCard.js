@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import cx from 'classnames';
 import styles from './ReportFilteredCard.module.scss';
 import IconButton from '../../atoms/IconButton/IconButton';
+import { GroupsContext } from '../../../contexts/GroupsContext';
+import { getAllGroups } from '../../../GraphService';
+import { CSVLink } from 'react-csv';
 
 const ReportFilteredCard = () => {
     const { register, handleSubmit } = useForm();
     const [loadingProcess, setLoadingProcess] = useState(false);
+    const {
+        groups: { groupsFilteredByString },
+        dispatch,
+    } = useContext(GroupsContext);
 
-    const onSubmit = (data, e) => {
+    const onSubmit = async (data, e) => {
         e.target.reset();
         setLoadingProcess(true);
-        setTimeout(() => {
+        try {
+            let groupsFilteredFetch = await getAllGroups();
+            groupsFilteredFetch = groupsFilteredFetch.filter((item) => {
+                return item.displayName
+                    .toLowerCase()
+                    .includes(data.searchString.toLowerCase());
+            });
+            dispatch({
+                type: 'SET_GROUPS_FILTERED_BY_STRING',
+                groupsFilteredFetch,
+            });
             setLoadingProcess(false);
-        }, 2000);
-        console.log(data);
+        } catch (error) {
+            dispatch({
+                type: 'SET_GROUP_ERROR',
+                error,
+            });
+            setLoadingProcess(false);
+        }
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -37,12 +59,26 @@ const ReportFilteredCard = () => {
                     </div>
                 </div>
                 <div className={cx(styles.cardFooterWrapper, 'card-footer')}>
-                    <IconButton
-                        iconText="Fetch"
-                        iconType="faSync"
-                        type="submit"
-                        isLoading={loadingProcess}
-                    />
+                    {groupsFilteredByString.length ? (
+                        <CSVLink data={groupsFilteredByString}>
+                            <IconButton
+                                iconText="Load"
+                                iconType="faFileDownload"
+                                type="button"
+                                isLoading={loadingProcess}
+                                onClick={(e) => {
+                                    dispatch({ type: 'CLEAR_FILTERED_DATA' });
+                                }}
+                            />
+                        </CSVLink>
+                    ) : (
+                        <IconButton
+                            iconText="Fetch"
+                            iconType="faSync"
+                            type="submit"
+                            isLoading={loadingProcess}
+                        />
+                    )}
                 </div>
             </div>
         </form>

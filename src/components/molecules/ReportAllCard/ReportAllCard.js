@@ -6,6 +6,7 @@ import IconButton from '../../atoms/IconButton/IconButton';
 import CheckboxField from '../../atoms/CheckboxField/CheckboxField';
 import { GroupsContext } from '../../../contexts/GroupsContext';
 import { getGroups } from '../../../GraphService';
+import { CSVLink } from 'react-csv';
 
 const ReportAllCard = () => {
     const { register, handleSubmit } = useForm();
@@ -31,6 +32,7 @@ const ReportAllCard = () => {
                 type: 'SET_GROUP_ERROR',
                 error,
             });
+            setLoadingProcess(false);
         }
     };
 
@@ -111,12 +113,26 @@ const ReportAllCard = () => {
                     </div>
                 </div>
                 <div className={cx(styles.cardFooterWrapper, 'card-footer')}>
-                    <IconButton
-                        iconText="Fetch"
-                        iconType="faSync"
-                        type="submit"
-                        isLoading={loadingProcess}
-                    />
+                    {groupsFiltered.length ? (
+                        <CSVLink data={groupsFiltered}>
+                            <IconButton
+                                iconText="Load"
+                                iconType="faFileDownload"
+                                type="button"
+                                isLoading={loadingProcess}
+                                onClick={(e) => {
+                                    dispatch({ type: 'CLEAR_FILTERED_DATA' });
+                                }}
+                            />
+                        </CSVLink>
+                    ) : (
+                        <IconButton
+                            iconText="Fetch"
+                            iconType="faSync"
+                            type="submit"
+                            isLoading={loadingProcess}
+                        />
+                    )}
                 </div>
             </div>
         </form>
