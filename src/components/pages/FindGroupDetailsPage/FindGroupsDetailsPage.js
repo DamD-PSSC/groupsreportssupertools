@@ -11,6 +11,7 @@ import { GroupsContext } from '../../../contexts/GroupsContext';
 import moment from 'moment';
 import { getGroupMembers, getGroupOwners } from '../../../GraphService';
 import { CSVLink } from 'react-csv';
+import { motion } from 'framer-motion';
 
 const FindGroupDetailsPage = () => {
     const {
@@ -56,9 +57,9 @@ const FindGroupDetailsPage = () => {
     }, [group]);
 
     return (
-        <>
+        <motion.div exit={{ opacity: 0 }}>
             {group ? (
-                <div className={cx(styles.cardContentWrapper, 'card')}>
+                <motion.div className={cx(styles.cardContentWrapper, 'card')}>
                     <div className={cx(styles.contentWrapper, 'is-relative')}>
                         <FindGroupDetailsHeader />
                     </div>
@@ -123,9 +124,9 @@ const FindGroupDetailsPage = () => {
                             </CSVLink>
                         ) : null}
                     </div>
-                </div>
+                </motion.div>
             ) : null}
-        </>
+        </motion.div>
     );
 };
 

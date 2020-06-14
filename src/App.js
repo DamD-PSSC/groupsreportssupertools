@@ -17,12 +17,11 @@ import { AnimatePresence } from 'framer-motion';
 // TODO: Add global mixins.
 
 const App = () => {
+    const location = useLocation();
     const {
         auth: { errorMessage },
         dispatch,
     } = useContext(AuthContext);
-
-    const location = useLocation();
 
     useEffect(() => {
         async function fetchDataProfile() {
@@ -37,30 +36,31 @@ const App = () => {
         }
         fetchDataProfile();
     }, []);
-
     return (
         <div className={cx(styles.applicationWrapper)}>
             <Navbar />
-            <AnimatePresence>
-                <Switch>
-                    <Route exact path="/" component={LoginPage} />
-                    <Route exact path="/findgroup">
-                        <GroupsContextProvider>
-                            <FindGroupPage />
-                        </GroupsContextProvider>
-                    </Route>
-                    <Route exact path="/findgroupdetails">
-                        <GroupsContextProvider>
-                            <FindGroupDetailsPage />
-                        </GroupsContextProvider>
-                    </Route>
-                    <Route exact path="/groupsreports">
-                        <GroupsContextProvider>
-                            <GroupsReportsPage />
-                        </GroupsContextProvider>
-                    </Route>
-                </Switch>
-            </AnimatePresence>
+            <GroupsContextProvider>
+                <AnimatePresence exitBeforeEnter initial={false}>
+                    <Switch location={location} key={location.key}>
+                        <Route exact path="/" component={LoginPage} />
+                        <Route
+                            exact
+                            path="/findgroup"
+                            component={FindGroupPage}
+                        />
+                        <Route
+                            exact
+                            path="/findgroupdetails"
+                            component={FindGroupDetailsPage}
+                        />
+                        <Route
+                            exact
+                            path="/groupsreports"
+                            component={GroupsReportsPage}
+                        />
+                    </Switch>
+                </AnimatePresence>
+            </GroupsContextProvider>
             <Footer />
         </div>
     );

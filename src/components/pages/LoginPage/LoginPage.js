@@ -4,6 +4,7 @@ import styles from './LoginPage.module.scss';
 import LoginHeader from '../../molecules/LoginHeader/LoginHeader';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { motion } from 'framer-motion';
 
 const LoginPage = () => {
     const {
@@ -19,13 +20,13 @@ const LoginPage = () => {
     }, [isAuthenticated]);
     return (
         <>
-            <section className="section">
+            <motion.section className="section" exit={{ opacity: 0 }}>
                 <div className={cx(styles.loginPageWrapper)}>
                     <div className={cx(styles.loginPageContent, 'container')}>
                         <LoginHeader />
                     </div>
                 </div>
-            </section>
+            </motion.section>
         </>
     );
 };
