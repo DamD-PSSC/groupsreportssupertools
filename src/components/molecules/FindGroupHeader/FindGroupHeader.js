@@ -7,6 +7,9 @@ import IconButton from '../../atoms/IconButton/IconButton';
 import { Form, Formik, Field } from 'formik';
 import { getGroupDetails } from '../../../GraphService';
 import { GroupsContext } from '../../../contexts/GroupsContext';
+import { motion } from 'framer-motion';
+
+// TODO: Change Formik to React-Hooks-Form (with try catch error handle)
 
 const FindGroupHeader = () => {
     const {
@@ -28,15 +31,21 @@ const FindGroupHeader = () => {
                 'has-text-centered'
             )}
         >
-            <h1
+            <motion.h1
                 className={cx(
                     styles.findGroupHeaderTitle,
                     'title is-1',
                     'has-text-white'
                 )}
+                initial={{ y: -70 }}
+                animate={{ y: 0 }}
+                transition={{
+                    ease: 'easeOut',
+                    duration: 0.8,
+                }}
             >
                 One Tool, all informations.
-            </h1>
+            </motion.h1>
             <Formik
                 initialValues={{ groupName: '' }}
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -74,21 +83,40 @@ const FindGroupHeader = () => {
             >
                 {({ isSubmitting }) => (
                     <Form>
-                        <div className={cx(styles.inputFieldWrapper)}>
+                        <motion.div
+                            className={cx(styles.inputFieldWrapper)}
+                            initial={{ x: -1080 }}
+                            animate={{ x: 0 }}
+                            transition={{
+                                ease: 'easeOut',
+                                duration: 1.5,
+                                type: 'spring',
+                                stiffness: 70,
+                            }}
+                        >
                             <Field
                                 name="groupName"
                                 type="text"
                                 placeholder="What group are your looking for..."
                                 component={InputField}
                             />
-                        </div>
-                        <IconButton
-                            iconText="Find"
-                            iconType="faTools"
-                            isLoading={isSubmitting}
-                            type="submit"
-                            disabled={isSubmitting}
-                        />
+                        </motion.div>
+                        <motion.div
+                            initial={{ y: 70 }}
+                            animate={{ y: 0 }}
+                            transition={{
+                                ease: 'easeOut',
+                                duration: 0.8,
+                            }}
+                        >
+                            <IconButton
+                                iconText="Find"
+                                iconType="faTools"
+                                isLoading={isSubmitting}
+                                type="submit"
+                                disabled={isSubmitting}
+                            />
+                        </motion.div>
                     </Form>
                 )}
             </Formik>

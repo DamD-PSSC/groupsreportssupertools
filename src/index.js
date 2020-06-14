@@ -5,11 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import 'bulma';
 import styles from './index.module.scss';
 import AuthContextProvider from './contexts/AuthContext';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
     <React.StrictMode>
         <AuthContextProvider>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </AuthContextProvider>
     </React.StrictMode>,
     document.getElementById('root')

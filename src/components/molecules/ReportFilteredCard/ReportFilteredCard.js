@@ -67,7 +67,9 @@ const ReportFilteredCard = () => {
                                 type="button"
                                 isLoading={loadingProcess}
                                 onClick={(e) => {
-                                    dispatch({ type: 'CLEAR_FILTERED_DATA' });
+                                    dispatch({
+                                        type: 'CLEAR_FILTERED_DATA',
+                                    });
                                 }}
                             />
                         </CSVLink>

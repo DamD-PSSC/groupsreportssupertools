@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, useLocation } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './App.module.scss';
 import FindGroupPage from './components/pages/FindGroupPage/FindGroupPage';
@@ -11,6 +11,7 @@ import Footer from './components/organisms/Footer/Footer';
 import { getUserProfile } from './MSAuth';
 import { AuthContext } from './contexts/AuthContext';
 import GroupsContextProvider from './contexts/GroupsContext';
+import { AnimatePresence } from 'framer-motion';
 
 // TODO: Add delay to render LoginPage.
 // TODO: Add global mixins.
@@ -20,6 +21,8 @@ const App = () => {
         auth: { errorMessage },
         dispatch,
     } = useContext(AuthContext);
+
+    const location = useLocation();
 
     useEffect(() => {
         async function fetchDataProfile() {
@@ -36,9 +39,9 @@ const App = () => {
     }, []);
 
     return (
-        <BrowserRouter>
-            <div className={cx(styles.applicationWrapper)}>
-                <Navbar />
+        <div className={cx(styles.applicationWrapper)}>
+            <Navbar />
+            <AnimatePresence>
                 <Switch>
                     <Route exact path="/" component={LoginPage} />
                     <Route exact path="/findgroup">
@@ -57,9 +60,9 @@ const App = () => {
                         </GroupsContextProvider>
                     </Route>
                 </Switch>
-                <Footer />
-            </div>
-        </BrowserRouter>
+            </AnimatePresence>
+            <Footer />
+        </div>
     );
 };
 

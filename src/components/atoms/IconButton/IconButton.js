@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './IconButton.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
 import {
     faTools,
     faSave,
@@ -22,10 +23,12 @@ const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
     };
     return (
         <>
-            <button
+            <motion.button
                 className={cx(styles.iconButton, 'button', 'has-text-white', {
                     'is-loading': isLoading,
                 })}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 {...props}
             >
                 <span className={cx(styles.iconButtonText)}>{iconText}</span>
@@ -37,7 +40,7 @@ const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
                         />
                     </span>
                 )}
-            </button>
+            </motion.button>
         </>
     );
 };
