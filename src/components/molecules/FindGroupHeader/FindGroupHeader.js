@@ -1,27 +1,62 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './FindGroupHeader.module.scss';
 import InputField from '../../atoms/InputField/InputField';
 import IconButton from '../../atoms/IconButton/IconButton';
-import { Form, Formik, Field } from 'formik';
 import { getGroupDetails } from '../../../GraphService';
 import { GroupsContext } from '../../../contexts/GroupsContext';
 import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
 
-// TODO: Change Formik to React-Hooks-Form (with try catch error handle)
+// TODO: Add shake animation to Error message
 
 const FindGroupHeader = () => {
     const {
         groups: { error },
         dispatch,
     } = useContext(GroupsContext);
+    const { register, handleSubmit } = useForm();
+    const [loadingProcess, setLoadingProcess] = useState(false);
 
     const history = useHistory();
 
     useEffect(() => {
         dispatch({ type: 'CLEAR_GROUP_DATA' });
     }, []);
+
+    const onSubmit = async (data, e) => {
+        e.target.reset();
+        setLoadingProcess(true);
+        let groupData = {};
+        try {
+            groupData = await getGroupDetails(
+                data.groupName.trim().toLowerCase()
+            );
+            if (groupData.value.length) {
+                dispatch({
+                    type: 'SET_GROUP_DETAILS',
+                    groupData,
+                });
+                history.push('/findgroupdetails');
+            } else {
+                groupData.message = `Failed to find group with name "${data.groupName
+                    .trim()
+                    .toLowerCase()}"`;
+                dispatch({
+                    type: 'SET_GROUP_ERROR',
+                    error: groupData,
+                });
+            }
+            setLoadingProcess(false);
+        } catch (error) {
+            dispatch({
+                type: 'SET_GROUP_ERROR',
+                error: error,
+            });
+            setLoadingProcess(false);
+        }
+    };
 
     return (
         <div
@@ -46,80 +81,42 @@ const FindGroupHeader = () => {
             >
                 One Tool, all informations.
             </motion.h1>
-            <Formik
-                initialValues={{ groupName: '' }}
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
-                    setSubmitting(true);
-                    const groupData = await getGroupDetails(
-                        values.groupName.trim().toLowerCase()
-                    );
-                    if (!groupData.statusCode && groupData.value.length) {
-                        dispatch({
-                            type: 'SET_GROUP_DETAILS',
-                            groupData,
-                        });
-                        setSubmitting(false);
-                        resetForm();
-                        history.push('/findgroupdetails');
-                    } else if (groupData.statusCode) {
-                        dispatch({
-                            type: 'SET_GROUP_ERROR',
-                            error: groupData,
-                        });
-                        setSubmitting(false);
-                        resetForm();
-                    } else {
-                        groupData.message = `Failed to find group with name "${values.groupName
-                            .trim()
-                            .toLowerCase()}"`;
-                        dispatch({
-                            type: 'SET_GROUP_ERROR',
-                            error: groupData,
-                        });
-                        setSubmitting(false);
-                        resetForm();
-                    }
-                }}
-            >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <motion.div
-                            className={cx(styles.inputFieldWrapper)}
-                            initial={{ x: -1080 }}
-                            animate={{ x: 0 }}
-                            transition={{
-                                ease: 'easeOut',
-                                duration: 1.5,
-                                type: 'spring',
-                                stiffness: 70,
-                            }}
-                        >
-                            <Field
-                                name="groupName"
-                                type="text"
-                                placeholder="What group are your looking for..."
-                                component={InputField}
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ y: 70 }}
-                            animate={{ y: 0 }}
-                            transition={{
-                                ease: 'easeOut',
-                                duration: 0.8,
-                            }}
-                        >
-                            <IconButton
-                                iconText="Find"
-                                iconType="faTools"
-                                isLoading={isSubmitting}
-                                type="submit"
-                                disabled={isSubmitting}
-                            />
-                        </motion.div>
-                    </Form>
-                )}
-            </Formik>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <motion.div
+                    className={cx(styles.inputFieldWrapper)}
+                    initial={{ x: -1080 }}
+                    animate={{ x: 0 }}
+                    transition={{
+                        ease: 'easeOut',
+                        duration: 1.5,
+                        type: 'spring',
+                        stiffness: 70,
+                    }}
+                >
+                    <InputField
+                        name="groupName"
+                        type="text"
+                        placeholder="What group are your looking for..."
+                        register={register}
+                    />
+                </motion.div>
+                <motion.div
+                    initial={{ y: 70 }}
+                    animate={{ y: 0 }}
+                    transition={{
+                        ease: 'easeOut',
+                        duration: 0.8,
+                    }}
+                >
+                    <IconButton
+                        iconText="Find"
+                        iconType="faTools"
+                        isLoading={loadingProcess}
+                        type="submit"
+                        disabled={loadingProcess}
+                    />
+                </motion.div>
+            </form>
         </div>
     );
 };

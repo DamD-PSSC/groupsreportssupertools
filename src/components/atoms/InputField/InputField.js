@@ -2,12 +2,12 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './InputField.module.scss';
 
-const InputField = ({ field, form, ...props }) => {
+const InputField = ({ register, ...props }) => {
     return (
         <input
             className={cx(styles.inputField, 'input')}
             type="text"
-            {...field}
+            ref={register}
             {...props}
         />
     );
