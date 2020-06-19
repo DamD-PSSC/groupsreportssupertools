@@ -27,7 +27,7 @@ const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
                 className={cx(styles.iconButton, 'button', 'has-text-white', {
                     'is-loading': isLoading,
                 })}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
                 {...props}
             >

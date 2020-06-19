@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import styles from './Navbar.module.scss';
 import cx from 'classnames';
 import Logo from '../../atoms/Logo/Logo';
@@ -30,18 +30,12 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {isAuthenticated ? (
                         <div className="navbar-item">
-                            <NavbarButton
-                                buttonText="Find a group"
-                                onClick={() => {
-                                    history.push('/findgroup');
-                                }}
-                            />
-                            <NavbarButton
-                                buttonText="Groups reports"
-                                onClick={() => {
-                                    history.push('/groupsreports');
-                                }}
-                            />
+                            <NavLink to="/findgroup">
+                                <NavbarButton buttonText="Find a group" />
+                            </NavLink>
+                            <NavLink to="/groupsreports" activeClassName="dupa">
+                                <NavbarButton buttonText="Groups reports" />
+                            </NavLink>
                             <FontAwesomeIcon
                                 icon={faUser}
                                 size="2x"

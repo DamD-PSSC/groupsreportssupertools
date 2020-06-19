@@ -98,7 +98,13 @@ const FindGroupDetailsPage = () => {
                                     item.toLowerCase().includes('smtp')
                                 )}
                             />
-                            <div className={cx('columns', 'is-vcentered')}>
+                            <div
+                                className={cx(
+                                    styles.listHalfColumnWrapper,
+                                    'columns',
+                                    'is-vcentered'
+                                )}
+                            >
                                 <ListHalfColumn
                                     ListName="Owners"
                                     ListValue={groupOwners}

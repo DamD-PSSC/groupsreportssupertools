@@ -6,8 +6,7 @@ import { logout } from '../../../MSAuth';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-
-// TODO: Add hover effect
+import { motion } from 'framer-motion';
 
 const LogoutButton = () => {
     const { auth, dispatch } = useContext(AuthContext);
@@ -16,7 +15,7 @@ const LogoutButton = () => {
 
     return (
         <div>
-            <button
+            <motion.button
                 className={cx(
                     styles.logoutButton,
                     'button',
@@ -32,11 +31,12 @@ const LogoutButton = () => {
                         dispatch({ type: 'SET_AUTH_ERROR', error });
                     }
                 }}
+                whileHover={{ scale: 1.05 }}
             >
                 <span className={cx('icon')}>
                     <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
                 </span>
-            </button>
+            </motion.button>
         </div>
     );
 };

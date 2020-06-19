@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './ListSingleRow.module.scss';
+import { motion } from 'framer-motion';
 
 const ListSingleRow = ({ ListName, ListValue }) => (
     <div className={cx(styles.listSingleRowWrapper, 'columns', 'is-vcentered')}>
@@ -15,7 +16,7 @@ const ListSingleRow = ({ ListName, ListValue }) => (
         >
             <p>{ListName}:</p>
         </div>
-        <div
+        <motion.div
             className={cx(
                 styles.listDataWrapper,
                 'column',
@@ -24,13 +25,18 @@ const ListSingleRow = ({ ListName, ListValue }) => (
                 'is-size-3',
                 'is-paddingless'
             )}
+            whileHover={{
+                overflowY: 'scroll',
+                maxHeight: 110,
+                transition: { duration: 0.8 },
+            }}
         >
             {ListValue.map((item, index) => (
                 <p key={index}>
                     {item.includes('SMTP:') ? <b>{item}</b> : item}
                 </p>
             ))}
-        </div>
+        </motion.div>
     </div>
 );
 

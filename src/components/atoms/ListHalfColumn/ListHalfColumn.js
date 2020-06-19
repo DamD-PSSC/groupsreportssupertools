@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './ListHalfColumn.module.scss';
+import { motion } from 'framer-motion';
 
 const ListHalfColumn = ({ ListName, ListValue }) => (
     <div
@@ -13,13 +14,20 @@ const ListHalfColumn = ({ ListName, ListValue }) => (
         )}
     >
         <p className={cx(styles.listName)}>{ListName}:</p>
-        <div className={cx(styles.listDataWrapper)}>
+        <motion.div
+            className={cx(styles.listDataWrapper)}
+            whileHover={{
+                overflowY: 'scroll',
+                height: 130,
+                transition: { duration: 0.8 },
+            }}
+        >
             {ListValue.map((item, index) => (
                 <p key={index}>
                     {item.displayName}, {item.userPrincipalName}
                 </p>
             ))}
-        </div>
+        </motion.div>
     </div>
 );
 
