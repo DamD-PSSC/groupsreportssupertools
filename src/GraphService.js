@@ -132,7 +132,18 @@ export async function getGroups(filterOptions) {
 
 export async function getAllGroups() {
     try {
-        const groups = await getGroupsFromApi();
+        let groups = await getGroupsFromApi();
+        groups = await Promise.all(
+            groups.value.map(async (group) => {
+                const members = await getGroupMembers(group.id);
+                const owners = await getGroupOwners(group.id);
+                return {
+                    ...group,
+                    members: members.value.map((member) => member.mail),
+                    owners: owners.value.map((owner) => owner.mail),
+                };
+            })
+        );
         return groups;
     } catch (error) {
         throw error;

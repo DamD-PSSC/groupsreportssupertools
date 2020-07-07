@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import cx from 'classnames';
-import styles from './ReportAllCard.module.scss';
+import { CSVLink } from 'react-csv';
 import IconButton from '../../atoms/IconButton/IconButton';
 import CheckboxField from '../../atoms/CheckboxField/CheckboxField';
 import { GroupsContext } from '../../../contexts/GroupsContext';
 import { getGroups } from '../../../GraphService';
-import { CSVLink } from 'react-csv';
+import styles from './ReportAllCard.module.scss';
 
 const ReportAllCard = () => {
     const { register, handleSubmit } = useForm();
@@ -21,7 +21,7 @@ const ReportAllCard = () => {
         setLoadingProcess(true);
         data.exportValues.push('id');
         try {
-            let groupsFilteredFetch = await getGroups(data.exportValues);
+            const groupsFilteredFetch = await getGroups(data.exportValues);
             dispatch({
                 type: 'SET_GROUPS_FILTERED',
                 groupsFilteredFetch,
@@ -120,7 +120,7 @@ const ReportAllCard = () => {
                                 iconType="faFileDownload"
                                 type="button"
                                 isLoading={loadingProcess}
-                                onClick={(e) => {
+                                onClick={() => {
                                     dispatch({ type: 'CLEAR_FILTERED_DATA' });
                                 }}
                             />

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch, Route, BrowserRouter, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import cx from 'classnames';
-import styles from './App.module.scss';
+import { AnimatePresence } from 'framer-motion';
 import FindGroupPage from './components/pages/FindGroupPage/FindGroupPage';
 import LoginPage from './components/pages/LoginPage/LoginPage';
 import FindGroupDetailsPage from './components/pages/FindGroupDetailsPage/FindGroupsDetailsPage';
@@ -11,17 +11,15 @@ import Footer from './components/organisms/Footer/Footer';
 import { getUserProfile } from './MSAuth';
 import { AuthContext } from './contexts/AuthContext';
 import GroupsContextProvider from './contexts/GroupsContext';
-import { AnimatePresence } from 'framer-motion';
+import styles from './App.module.scss';
 
 // TODO: Add delay to render LoginPage.
 // TODO: Add global mixins.
 
 const App = () => {
     const location = useLocation();
-    const {
-        auth: { errorMessage },
-        dispatch,
-    } = useContext(AuthContext);
+    // eslint-disable-next-line no-unused-vars
+    const { auth, dispatch } = useContext(AuthContext);
 
     useEffect(() => {
         async function fetchDataProfile() {

@@ -47,6 +47,10 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7a2c2', endColorstr='#a57dfc', GradientType=1 );
 
     height: 100vh;
+
+    @media screen and (max-height: '1000px') {
+        overflow: scroll;
+    }
 }
 
 code {
