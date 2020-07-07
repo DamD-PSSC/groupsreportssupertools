@@ -1,0 +1,9 @@
+module.exports = {
+    appId: '',
+    redirectUri: '',
+    scopes: ['user.read'],
+    authority:
+        '',
+};
+
+Filename: 'Config.js'

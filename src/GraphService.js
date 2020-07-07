@@ -13,7 +13,41 @@ async function getAuthenticatedClient() {
 
         return client;
     } catch (error) {
-        console.log('GetAClientErr: ' + error);
+        console.log(`GetAClientErr: ${error}`);
+    }
+}
+
+async function getGroupsFromApi(filterOptionWithoutMembers = null) {
+    const client = await getAuthenticatedClient();
+    if (filterOptionWithoutMembers) {
+        // eslint-disable-next-line prefer-const
+        let groups = await client
+            .api('/groups?$top=100')
+            .select(filterOptionWithoutMembers)
+            .get();
+
+        while (groups['@odata.nextLink']) {
+            const groupsNext = await client
+                .api(groups['@odata.nextLink'])
+                .get();
+            groupsNext.value.map((item) => groups.value.push(item));
+            groups['@odata.nextLink'] = groupsNext['@odata.nextLink'];
+            console.log(groups);
+        }
+        return groups;
+    } else {
+        // eslint-disable-next-line prefer-const
+        let groups = await client.api('/groups?$top=100').get();
+
+        while (groups['@odata.nextLink']) {
+            const groupsNext = await client
+                .api(groups['@odata.nextLink'])
+                .get();
+            groupsNext.value.map((item) => groups.value.push(item));
+            groups['@odata.nextLink'] = groupsNext['@odata.nextLink'];
+            console.log(groups);
+        }
+        return groups;
     }
 }
 
@@ -25,7 +59,7 @@ export async function getUserDetails() {
 
         return user;
     } catch (error) {
-        console.log('GetUDetails: ' + error);
+        console.log(`GetUDetails: ${error}`);
     }
 }
 
@@ -69,14 +103,10 @@ export async function getGroupMembers(groupId) {
 
 export async function getGroups(filterOptions) {
     try {
-        const client = await getAuthenticatedClient();
         const filterOptionWithoutMembers = filterOptions
             .filter((item) => item !== 'members')
             .toString();
-        let groups = await client
-            .api('/groups')
-            .select(filterOptionWithoutMembers)
-            .get();
+        let groups = await getGroupsFromApi(filterOptionWithoutMembers);
 
         if (filterOptions.includes('members')) {
             // Promise.all to resolve all promises from array
@@ -102,20 +132,7 @@ export async function getGroups(filterOptions) {
 
 export async function getAllGroups() {
     try {
-        const client = await getAuthenticatedClient();
-        let groups = await client.api('/groups').get();
-
-        groups = await Promise.all(
-            groups.value.map(async (group) => {
-                const members = await getGroupMembers(group.id);
-                const owners = await getGroupOwners(group.id);
-                return {
-                    ...group,
-                    members: members.value.map((member) => member.mail),
-                    owners: owners.value.map((owner) => owner.mail),
-                };
-            })
-        );
+        const groups = await getGroupsFromApi();
         return groups;
     } catch (error) {
         throw error;

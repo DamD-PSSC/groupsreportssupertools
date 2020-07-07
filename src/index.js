@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bulma';
+// eslint-disable-next-line no-unused-vars
 import styles from './index.module.scss';
 import AuthContextProvider from './contexts/AuthContext';
-import { BrowserRouter } from 'react-router-dom';
+
+/* eslint-env browser */
 
 ReactDOM.render(
     <React.StrictMode>

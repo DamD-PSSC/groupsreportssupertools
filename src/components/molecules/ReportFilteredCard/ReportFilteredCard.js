@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import cx from 'classnames';
+import { CSVLink } from 'react-csv';
 import styles from './ReportFilteredCard.module.scss';
 import IconButton from '../../atoms/IconButton/IconButton';
 import { GroupsContext } from '../../../contexts/GroupsContext';
 import { getAllGroups } from '../../../GraphService';
-import { CSVLink } from 'react-csv';
 
 const ReportFilteredCard = () => {
     const { register, handleSubmit } = useForm();
@@ -66,7 +66,7 @@ const ReportFilteredCard = () => {
                                 iconType="faFileDownload"
                                 type="button"
                                 isLoading={loadingProcess}
-                                onClick={(e) => {
+                                onClick={() => {
                                     dispatch({
                                         type: 'CLEAR_FILTERED_DATA',
                                     });
