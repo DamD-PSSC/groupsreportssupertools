@@ -19,12 +19,9 @@ const ReportFilteredCard = () => {
         e.target.reset();
         setLoadingProcess(true);
         try {
-            let groupsFilteredFetch = await getAllGroups();
-            groupsFilteredFetch = groupsFilteredFetch.filter((item) => {
-                return item.displayName
-                    .toLowerCase()
-                    .includes(data.searchString.toLowerCase());
-            });
+            const groupsFilteredFetch = await getAllGroups(
+                data.searchString.toLowerCase()
+            );
             dispatch({
                 type: 'SET_GROUPS_FILTERED_BY_STRING',
                 groupsFilteredFetch,

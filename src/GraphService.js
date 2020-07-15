@@ -32,7 +32,6 @@ async function getGroupsFromApi(filterOptionWithoutMembers = null) {
                 .get();
             groupsNext.value.map((item) => groups.value.push(item));
             groups['@odata.nextLink'] = groupsNext['@odata.nextLink'];
-            console.log(groups);
         }
         return groups;
     } else {
@@ -45,7 +44,6 @@ async function getGroupsFromApi(filterOptionWithoutMembers = null) {
                 .get();
             groupsNext.value.map((item) => groups.value.push(item));
             groups['@odata.nextLink'] = groupsNext['@odata.nextLink'];
-            console.log(groups);
         }
         return groups;
     }
@@ -130,9 +128,14 @@ export async function getGroups(filterOptions) {
     }
 }
 
-export async function getAllGroups() {
+export async function getAllGroups(filterOptions = null) {
     try {
         let groups = await getGroupsFromApi();
+        if (filterOptions) {
+            groups.value = groups.value.filter((item) => {
+                return item.displayName.toLowerCase().includes(filterOptions);
+            });
+        }
         groups = await Promise.all(
             groups.value.map(async (group) => {
                 const members = await getGroupMembers(group.id);
