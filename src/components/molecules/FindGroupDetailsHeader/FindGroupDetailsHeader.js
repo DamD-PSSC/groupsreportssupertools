@@ -8,7 +8,6 @@ import { GroupsContext } from '../../../contexts/GroupsContext';
 const FindGroupDetailsHeader = () => {
     const {
         groups: { group },
-        dispatch,
     } = useContext(GroupsContext);
 
     const history = useHistory();

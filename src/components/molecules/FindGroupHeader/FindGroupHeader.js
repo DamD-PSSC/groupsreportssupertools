@@ -1,21 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
 import styles from './FindGroupHeader.module.scss';
 import InputField from '../../atoms/InputField/InputField';
 import IconButton from '../../atoms/IconButton/IconButton';
 import { getGroupDetails } from '../../../GraphService';
 import { GroupsContext } from '../../../contexts/GroupsContext';
-import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
 
 // TODO: Add shake animation to Error message
 
 const FindGroupHeader = () => {
-    const {
-        groups: { error },
-        dispatch,
-    } = useContext(GroupsContext);
+    const { groups, dispatch } = useContext(GroupsContext);
     const { register, handleSubmit } = useForm();
     const [loadingProcess, setLoadingProcess] = useState(false);
 
@@ -52,7 +49,7 @@ const FindGroupHeader = () => {
         } catch (error) {
             dispatch({
                 type: 'SET_GROUP_ERROR',
-                error: error,
+                error,
             });
             setLoadingProcess(false);
         }

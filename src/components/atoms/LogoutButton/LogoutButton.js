@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import styles from './LogoutButton.module.scss';
 import cx from 'classnames';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { logout } from '../../../MSAuth';
+import { motion } from 'framer-motion';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
+import { logout } from '../../../MSAuth';
+import { AuthContext } from '../../../contexts/AuthContext';
+import styles from './LogoutButton.module.scss';
 
 const LogoutButton = () => {
     const { auth, dispatch } = useContext(AuthContext);

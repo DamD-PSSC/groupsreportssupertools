@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './LoginHeader.module.scss';
 import cx from 'classnames';
+import styles from './LoginHeader.module.scss';
 import LoginButton from '../../atoms/LoginButton/LoginButton';
 
 const LoginHeader = () => (

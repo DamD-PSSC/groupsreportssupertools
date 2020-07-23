@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import cx from 'classnames';
 import styles from './LoginPage.module.scss';
 import LoginHeader from '../../molecules/LoginHeader/LoginHeader';
-import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { motion } from 'framer-motion';
 
 const LoginPage = () => {
     const {

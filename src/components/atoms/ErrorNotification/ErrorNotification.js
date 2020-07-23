@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import styles from './ErrorNotification.module.scss';
-import { GroupsContext } from '../../../contexts/GroupsContext';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
+import styles from './ErrorNotification.module.scss';
+import { GroupsContext } from '../../../contexts/GroupsContext';
 
 const ErrorNotification = () => {
     const {
-        groups: { error, groupMessage },
-        dispatch,
+        groups: { error },
     } = useContext(GroupsContext);
     return (
         <>

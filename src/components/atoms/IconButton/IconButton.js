@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './IconButton.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import {
@@ -11,6 +10,7 @@ import {
     faFileDownload,
     faSync,
 } from '@fortawesome/free-solid-svg-icons';
+import styles from './IconButton.module.scss';
 
 const IconButton = ({ iconText, iconType, isLoading, ...props }) => {
     const iconList = {

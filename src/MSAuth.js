@@ -1,6 +1,6 @@
+import { UserAgentApplication } from 'msal';
 import config from './Config';
 import { getUserDetails } from './GraphService';
-import { UserAgentApplication } from 'msal';
 
 // Create object for handle MS Token.
 const userAgentApplication = new UserAgentApplication({
@@ -31,13 +31,13 @@ export const getToken = async () => {
 
 export const getUserProfile = async () => {
     try {
-        var accessToken = await userAgentApplication.acquireTokenSilent({
+        const accessToken = await userAgentApplication.acquireTokenSilent({
             scopes: config.scopes,
             authority: config.authority,
         });
 
         if (accessToken) {
-            var user = await getUserDetails(accessToken);
+            const user = await getUserDetails(accessToken);
             return user;
         }
     } catch (error) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './ListSingleRow.module.scss';
 import { motion } from 'framer-motion';
+import styles from './ListSingleRow.module.scss';
 
 const ListSingleRow = ({ ListName, ListValue }) => (
     <div className={cx(styles.listSingleRowWrapper, 'columns', 'is-vcentered')}>

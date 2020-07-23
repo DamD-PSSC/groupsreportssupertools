@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
-import styles from './FindGroupDetailsPage.module.scss';
+import moment from 'moment';
+import { CSVLink } from 'react-csv';
+import { motion } from 'framer-motion';
 import FindGroupDetailsHeader from '../../molecules/FindGroupDetailsHeader/FindGroupDetailsHeader';
 import TextSingleRow from '../../atoms/TextSingleRow/TextSingleRow';
 import ListSingleRow from '../../atoms/ListSingleRow/ListSingleRow';
 import ListHalfColumn from '../../atoms/ListHalfColumn/ListHalfColumn';
 import IconButton from '../../atoms/IconButton/IconButton';
 import { GroupsContext } from '../../../contexts/GroupsContext';
-import moment from 'moment';
 import { getGroupMembers, getGroupOwners } from '../../../GraphService';
-import { CSVLink } from 'react-csv';
-import { motion } from 'framer-motion';
+import styles from './FindGroupDetailsPage.module.scss';
 
 const FindGroupDetailsPage = () => {
     const {
@@ -30,19 +30,25 @@ const FindGroupDetailsPage = () => {
     useEffect(() => {
         async function fetchGroupData() {
             if (group) {
-                const groupOwners = await getGroupOwners(group.id);
-                dispatch({ type: 'SET_GROUP_OWNERS', groupOwners });
-                const groupMembers = await getGroupMembers(group.id);
-                dispatch({ type: 'SET_GROUP_MEMBERS', groupMembers });
+                const groupOwnersData = await getGroupOwners(group.id);
+                dispatch({
+                    type: 'SET_GROUP_OWNERS',
+                    groupOwners: groupOwnersData,
+                });
+                const groupMembersData = await getGroupMembers(group.id);
+                dispatch({
+                    type: 'SET_GROUP_MEMBERS',
+                    groupMembers: groupMembersData,
+                });
                 const groupExportData = [
                     {
                         ...group,
 
-                        owners: groupOwners.value.map(
+                        owners: groupOwnersData.value.map(
                             (item) => item.userPrincipalName
                         ),
 
-                        members: groupMembers.value.map(
+                        members: groupMembersData.value.map(
                             (item) => item.userPrincipalName
                         ),
                     },
@@ -74,9 +80,12 @@ const FindGroupDetailsPage = () => {
                             <TextSingleRow
                                 DataName="Description"
                                 DataValue={
+                                    group.description &&
                                     group.description.length > 20
-                                        ? group.description.substr(0, 20) +
-                                          '...'
+                                        ? `${group.description.substr(
+                                              0,
+                                              20
+                                          )}...`
                                         : group.description
                                 }
                             />

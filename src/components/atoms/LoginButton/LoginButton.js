@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import styles from './LoginButton.module.scss';
+import { useHistory } from 'react-router-dom';
 import cx from 'classnames';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { login } from '../../../MSAuth';
-import { useHistory } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import styles from './LoginButton.module.scss';
 
 const LoginButton = () => {
     const { auth, dispatch } = useContext(AuthContext);

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import cx from 'classnames';
+import { useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import styles from './FindGroupPage.module.scss';
 import FindGroupHeader from '../../molecules/FindGroupHeader/FindGroupHeader';
-import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import ErrorNotification from '../../atoms/ErrorNotification/ErrorNotification';
-import { motion } from 'framer-motion';
 
 const FindGroupPage = () => {
     const {

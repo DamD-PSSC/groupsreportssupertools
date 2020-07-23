@@ -1,21 +1,18 @@
 import React, { useContext } from 'react';
-import { useHistory, NavLink } from 'react-router-dom';
-import styles from './Navbar.module.scss';
-import cx from 'classnames';
-import Logo from '../../atoms/Logo/Logo';
-import NavbarButton from '../../atoms/NavbarButton/NavbarButton';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import cx from 'classnames';
+import styles from './Navbar.module.scss';
+import Logo from '../../atoms/Logo/Logo';
+import NavbarButton from '../../atoms/NavbarButton/NavbarButton';
 import { AuthContext } from '../../../contexts/AuthContext';
 import LogoutButton from '../../atoms/LogoutButton/LogoutButton';
 
 const Navbar = () => {
     const {
         auth: { isAuthenticated, user },
-        dispatch,
     } = useContext(AuthContext);
-
-    const history = useHistory();
 
     return (
         <nav
@@ -33,7 +30,7 @@ const Navbar = () => {
                             <NavLink to="/findgroup">
                                 <NavbarButton buttonText="Find a group" />
                             </NavLink>
-                            <NavLink to="/groupsreports" activeClassName="dupa">
+                            <NavLink to="/groupsreports" activeClassName="">
                                 <NavbarButton buttonText="Groups reports" />
                             </NavLink>
                             <FontAwesomeIcon

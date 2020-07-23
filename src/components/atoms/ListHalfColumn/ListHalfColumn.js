@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './ListHalfColumn.module.scss';
 import { motion } from 'framer-motion';
+import styles from './ListHalfColumn.module.scss';
 
 const ListHalfColumn = ({ ListName, ListValue }) => (
     <div
