@@ -99,23 +99,61 @@ export async function getGroupMembers(groupId) {
     }
 }
 
+export async function getGroupMemberOf(groupId) {
+    try {
+        const client = await getAuthenticatedClient();
+
+        const memberOf = await client.api(`groups/${groupId}/memberof`).get();
+
+        return memberOf;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function getGroups(filterOptions) {
     try {
-        const filterOptionWithoutMembers = filterOptions
-            .filter((item) => item !== 'members')
+        const filterOptionWithoutSpecialRequest = filterOptions
+            .filter((item) => item !== 'members' && item !== 'memberof')
             .toString();
-        let groups = await getGroupsFromApi(filterOptionWithoutMembers);
-
-        if (filterOptions.includes('members')) {
+        let groups = await getGroupsFromApi(filterOptionWithoutSpecialRequest);
+        if (
+            filterOptions.includes('members') ||
+            filterOptions.includes('memberof')
+        ) {
             // Promise.all to resolve all promises from array
             groups = await Promise.all(
                 groups.value.map(async (group) => {
-                    const members = await getGroupMembers(group.id);
-                    const owners = await getGroupOwners(group.id);
+                    let membersObject = {};
+                    let memberOfObject = {};
+                    if (filterOptions.includes('members')) {
+                        const members = await getGroupMembers(group.id);
+                        const owners = await getGroupOwners(group.id);
+                        membersObject = {
+                            members: members.value.length
+                                ? members.value.map((member) => {
+                                      return member.displayName;
+                                  })
+                                : null,
+                            owners: owners.value
+                                ? owners.value.map((owner) => owner.mail)
+                                : null,
+                        };
+                    }
+
+                    if (filterOptions.includes('memberof')) {
+                        const memberOf = await getGroupMemberOf(group.id);
+                        memberOfObject = {
+                            memberOf: memberOf.value
+                                ? memberOf.value.map((item) => item.displayName)
+                                : null,
+                        };
+                    }
+
                     return {
                         ...group,
-                        members: members.value.map((member) => member.mail),
-                        owners: owners.value.map((owner) => owner.mail),
+                        ...membersObject,
+                        ...memberOfObject,
                     };
                 })
             );
@@ -140,10 +178,12 @@ export async function getAllGroups(filterOptions = null) {
             groups.value.map(async (group) => {
                 const members = await getGroupMembers(group.id);
                 const owners = await getGroupOwners(group.id);
+                const memberOf = await getGroupMemberOf(group.id);
                 return {
                     ...group,
                     members: members.value.map((member) => member.mail),
                     owners: owners.value.map((owner) => owner.mail),
+                    memberOf: memberOf.value.map((item) => item.displayName),
                 };
             })
         );

@@ -77,6 +77,12 @@ const ReportAllCard = () => {
                                 value="mail"
                                 register={register}
                             />
+                            <CheckboxField
+                                fieldName="Member Of"
+                                name="exportValues"
+                                value="memberof"
+                                register={register}
+                            />
                         </div>
                         <div className={cx(styles.columnWrapper, 'column')}>
                             <CheckboxField
