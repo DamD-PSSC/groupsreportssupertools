@@ -22,7 +22,7 @@ async function getGroupsFromApi(filterOptionWithoutMembers = null) {
     if (filterOptionWithoutMembers) {
         // eslint-disable-next-line prefer-const
         let groups = await client
-            .api('/groups?$top=100')
+            .api('/groups?$top=500')
             .select(filterOptionWithoutMembers)
             .get();
 
@@ -36,7 +36,7 @@ async function getGroupsFromApi(filterOptionWithoutMembers = null) {
         return groups;
     } else {
         // eslint-disable-next-line prefer-const
-        let groups = await client.api('/groups?$top=100').get();
+        let groups = await client.api('/groups?$top=500').get();
 
         while (groups['@odata.nextLink']) {
             const groupsNext = await client
